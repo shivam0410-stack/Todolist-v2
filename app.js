@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const date = require(__dirname + "/date.js");
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+let day = date.getDate();
 
 mongoose.connect(
   "mongodb+srv://Shivam_Shekhar:Shivam$0410@cluster0.qoadi.mongodb.net/todolistDB",
@@ -58,7 +61,7 @@ app.get("/", function (req, res) {
       });
       res.redirect("/");
     } else {
-      res.render("list", { listTitle: "Today", newListItems: foundItems });
+      res.render("list", { listTitle: day, newListItems: foundItems });
     }
   });
 });
